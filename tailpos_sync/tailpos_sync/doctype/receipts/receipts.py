@@ -23,7 +23,9 @@ class Receipts(Document):
 			self.series = 'Receipt/{0}'.format(self.receiptnumber)
 
 	def autoname(self):
-		self.name = self.series
+		if not self.id:
+			self.id = 'Receipt/' + str(uuid.uuid4())
+		self.name = self.id
 
 	def before_save(self):
 		"""Setup the Receipts document"""
