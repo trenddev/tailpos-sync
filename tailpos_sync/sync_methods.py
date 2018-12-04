@@ -4,7 +4,7 @@ import frappe, json, datetime
 def insert_data(i,data,frappe_table,receipt_total):
 
     for key, value in data[i]['syncObject'].iteritems():
-
+        print("nisuloddddddd")
         field_name = str(key).lower()
 
         if field_name == "taxes":
@@ -68,7 +68,7 @@ def insert_data(i,data,frappe_table,receipt_total):
                 frappe_table.db_set("total_amount", receipt_total)
             except Exception:
                 print(frappe.get_traceback())
-
+        print("EXCEPTION")
         frappe_table.insert(ignore_permissions=True)
     except Exception:
         print(frappe.get_traceback())
@@ -191,7 +191,7 @@ def add_receipt_lines(data,i):
 
                 try:
                     doc = {'doctype': 'Receipts Item',
-                           'parent': str(data['tailposData'][i]['syncObject']['_id']),
+                           'parent': data[i]['syncObject']['_id'],
                            'parenttype': "Receipts",
                            'parentfield': "receipt_lines",
                            'item_name': data[i]['syncObject']['lines'][x]['item_name'],
@@ -228,8 +228,15 @@ def uom_check():
         }).insert(ignore_permissions=True)
 
 def get_category(id):
-    data = frappe.db.sql(""" SELECT description FROM `tabCategories` WHERE id=%s """, (id),as_dict=True)
+    print(id)
+    print("CATEGORY")
+    try:
+        data = frappe.db.sql(""" SELECT description FROM `tabCategories` WHERE id=%s """, (id),as_dict=True)
+    except Exception:
+        print(frappe.get_traceback())
     data_value = ""
-    if data[0]['description']:
-        data_value = data[0]['description']
+    print(data)
+    if len(data) > 0:
+        if data[0]['description']:
+            data_value = data[0]['description']
     return data_value

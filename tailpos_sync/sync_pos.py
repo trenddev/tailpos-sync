@@ -37,7 +37,7 @@ def sync_data(data):
 
             if update_data:
                 #Insert data
-
+                print(data['tailposData'][i]['dbName'])
                 insert_data(i,data['tailposData'],frappe_table,receipt_total)
 
     erpnext_data = ""

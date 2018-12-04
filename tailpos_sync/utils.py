@@ -102,10 +102,9 @@ def generate_sales_invoice_by_date(date):
 
 def generate_sales_invoice_from_receipt(doc, method):
     """Generates Sales Invoice based from the Receipt created"""
-    settings = frappe.get_doc('TailPOS Settings', 'TailPOS Settings')
-    print("SERIEES")
-    print(doc.series == None)
-    if settings.sales_invoice == 'By Individual' and not exists_sales_invoice_by_receipt(doc.series):
+    # settings = frappe.get_doc('TailPOS Settings', 'TailPOS Settings')
+    settings = 'By Individual'
+    if settings == 'By Individual' and not exists_sales_invoice_by_receipt(doc.series):
         sales_invoice = frappe.get_doc({
             'doctype': 'Sales Invoice',
             'customer': 'Guest',
