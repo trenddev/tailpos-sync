@@ -1,8 +1,7 @@
 import frappe, json, datetime
 
 
-def insert_data(i,data,frappe_table,receipt_total):
-
+def insert_data(i, data, frappe_table, receipt_total):
     for key, value in data[i]['syncObject'].iteritems():
         print("nisuloddddddd")
         field_name = str(key).lower()
@@ -73,14 +72,16 @@ def insert_data(i,data,frappe_table,receipt_total):
     except Exception:
         print(frappe.get_traceback())
 
+
 def deleted_documents():
     tables = ["Item", "Categories", "Discounts", "Attendants", "Customer"]
     tableNames = ["Items", "Categories", "Discounts", "Attendants", "Customer"]
     returnArray = []
 
-    for i in range(0,len(tables)):
+    for i in range(0, len(tables)):
 
-        data = frappe.db.sql(""" SELECT data FROM `tabDeleted Document` WHERE deleted_doctype=%s""", (tables[i]),as_dict=True)
+        data = frappe.db.sql(""" SELECT data FROM `tabDeleted Document` WHERE deleted_doctype=%s""", (tables[i]),
+                             as_dict=True)
 
         for x in data:
 
@@ -93,15 +94,17 @@ def deleted_documents():
             except Exception:
                 print(frappe.get_traceback())
             try:
-                frappe.db.sql(""" UPDATE `tabDeleted Document` SET sync_status=%s WHERE data=%s""",('true',x.data), as_dict=True)
+                frappe.db.sql(""" UPDATE `tabDeleted Document` SET sync_status=%s WHERE data=%s""", ('true', x.data),
+                              as_dict=True)
             except Exception:
                 print(frappe.get_traceback())
 
     return returnArray
 
+
 def force_sync_from_erpnext_to_tailpos():
     try:
-        tableNames = ['Item','Categories','Discounts','Attendants', "Customer"]
+        tableNames = ['Item', 'Categories', 'Discounts', 'Attendants', "Customer"]
         data = []
         for i in tableNames:
             dataFromDb = frappe.db.sql("SELECT * FROM `tab" + i + "`", as_dict=True)
@@ -116,14 +119,13 @@ def force_sync_from_erpnext_to_tailpos():
         print(frappe.get_traceback())
     return data
 
+
 def sync_from_erpnext_to_tailpos():
-
-
-    table_names = ['Item','Categories','Discounts','Attendants', 'Customer']
+    table_names = ['Item', 'Categories', 'Discounts', 'Attendants', 'Customer']
     data = []
     for i in table_names:
 
-        dataFromDb = frappe.db.sql("SELECT * FROM `tab" + i + "` WHERE `modified` > `date_updated`",as_dict=True)
+        dataFromDb = frappe.db.sql("SELECT * FROM `tab" + i + "` WHERE `modified` > `date_updated`", as_dict=True)
 
         if len(dataFromDb) > 0:
             for x in dataFromDb:
@@ -134,6 +136,7 @@ def sync_from_erpnext_to_tailpos():
                 frappe.db.sql("UPDATE `tab" + i + "` SET `date_updated`=`modified` where id=%s", (x.id))
     return data
 
+
 def delete_records(data):
     for check in data:
         check_existing_deleted_item = frappe.db.sql("SELECT * FROM" + "`tab" + check['table_name'] + "` WHERE id=%s ",
@@ -142,6 +145,7 @@ def delete_records(data):
             frappe.db.sql("DELETE FROM" + "`tab" + check['table_name'] + "` WHERE id=%s ",
                           (check['trashId']))
 
+
 def deleted_records_check(id, array):
     status = True
     for i in array:
@@ -149,7 +153,8 @@ def deleted_records_check(id, array):
             status = False
     return status
 
-def create_doc(data,i,owner='Administrator'):
+
+def create_doc(data, i, owner='Administrator'):
     if data[i]['dbName'] == "Item":
         try:
             frappe_table = frappe.get_doc({
@@ -176,7 +181,8 @@ def create_doc(data,i,owner='Administrator'):
             print(frappe.get_traceback())
     return frappe_table
 
-def add_receipt_lines(data,i):
+
+def add_receipt_lines(data, i):
     receipt_total = 0
     existLines = frappe.db.sql(
         "SELECT * FROM `tabReceipts Item` WHERE parent=%s ",
@@ -206,6 +212,7 @@ def add_receipt_lines(data,i):
                     print(frappe.get_traceback())
     return receipt_total
 
+
 def uom_check():
     each = frappe.db.sql(""" SELECT * FROM `tabUOM` WHERE name='Each'""")
 
@@ -227,11 +234,12 @@ def uom_check():
             'uom_name': 'Weight'
         }).insert(ignore_permissions=True)
 
+
 def get_category(id):
     print(id)
     print("CATEGORY")
     try:
-        data = frappe.db.sql(""" SELECT description FROM `tabCategories` WHERE id=%s """, (id),as_dict=True)
+        data = frappe.db.sql(""" SELECT description FROM `tabCategories` WHERE id=%s """, (id), as_dict=True)
     except Exception:
         print(frappe.get_traceback())
     data_value = ""
