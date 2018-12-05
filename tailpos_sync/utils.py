@@ -187,3 +187,7 @@ def save_customer(doc, method):
         doc.territory = 'All Territories'
     except Exception:
         print(frappe.get_traceback())
+
+def test():
+    number = frappe.db.sql("""SELECT COUNT(*) as count FROM `tabReceipts` WHERE generated=0""", as_dict=1)
+    print number
