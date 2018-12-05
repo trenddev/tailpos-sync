@@ -1,7 +1,7 @@
 import frappe
 
 
-def send_msg(message='Ivanov', recipient='+639977491965'):
+def send_msg(message, recipient):
     """Send message with the recipient"""
     import requests
 
