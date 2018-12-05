@@ -5,7 +5,6 @@
 from __future__ import unicode_literals
 from frappe.model.document import Document
 from frappe import _
-from tailpos_sync.events import document_on_update, document_on_trash, document_on_save
 import frappe
 import uuid
 
@@ -30,8 +29,6 @@ class Discounts(Document):
                 "percentageType": types[self.type]
             }
 
-            document_on_save(skeleton_doc, self.__dict__['doctype'])
-
     def validate(self):
 
         flags = self.__dict__['flags']
@@ -42,11 +39,13 @@ class Discounts(Document):
 
             if len(exists) > 0:
                 frappe.throw(_("Discount already exist!"))
+
         if self.date_updated == None:
             try:
                 self.date_updated = self.modified
             except Exception:
                 print(frappe.get_traceback())
+
     def on_update(self):
 
         flags = self.__dict__['flags']
@@ -75,9 +74,6 @@ class Discounts(Document):
 
                 self.type = types[self.percentagetype]
 
-            if not self.from_couchdb:
-                document_on_update(self)
-
     def before_save(self):
         # self.syncstatus = "false"
         flags = self.__dict__['flags']
@@ -90,6 +86,3 @@ class Discounts(Document):
                     "fixDiscount": "Fix Discount"
                 }
                 self.type = types[self.percentagetype]
-
-    def on_trash(self):
-        document_on_trash(self)

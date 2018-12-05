@@ -5,7 +5,6 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from tailpos_sync.events import document_on_update, document_on_trash, document_on_save
 import uuid
 class Attendants(Document):
 	def autoname(self):
@@ -21,8 +20,6 @@ class Attendants(Document):
 				"pin_code": self.pin_code,
 				"role": self.role
 			}
-
-			document_on_save(skeleton_doc, self.__dict__['doctype'])
 
 	def validate(self):
 		# self.syncstatus = "false"
@@ -41,5 +38,3 @@ class Attendants(Document):
 				self.date_updated = self.modified
 			except Exception:
 				print(frappe.get_traceback())
-	def on_trash(self):
-		document_on_trash(self)
