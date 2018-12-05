@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 # Changelog
 # =========
-# - Added `pull_data` function
+# - Changed 'send_message' to 'send_msg', refactored from events to sms
+# =========
 
