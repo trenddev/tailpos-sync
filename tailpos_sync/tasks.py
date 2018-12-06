@@ -27,7 +27,8 @@ def get_sales(str_date):
     message = 'Sales Summary \nDate: {0} \nTotal Sales: P{1} \nTransactions: {2}'.format(str_date, total_sales, total_count)
     send_message(message, '+639177777981')
     send_message(message, '+639177779508')
+    send_message(message, '+639977491965')
 
 
-def test_text():
-    get_sales('2018-12-02')
+def send_sales():
+    get_sales((datetime.now().date() - timedelta(days=1)).strftime('%Y-%m-%d'))
