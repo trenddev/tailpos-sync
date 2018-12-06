@@ -46,8 +46,9 @@ def insert_data(i, data, frappe_table, receipt_total):
         elif field_name == "date":
             if value:
                 if data[i]['dbName'] != "Receipts":
-
                     value = datetime.datetime.fromtimestamp(value / 1000.0).date()
+                    print("VALUUUUEEEEEE")
+                    print(value)
                 else:
                     value = datetime.datetime.fromtimestamp(value / 1000.0)
 

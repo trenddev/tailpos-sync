@@ -32,7 +32,7 @@ def sync_data(data):
         # Check if record is existing in deleted documents
         if deleted_records_check(data['tailposData'][i]['syncObject']['_id'], deleted_records):
             try:
-                exist = frappe.db.sql("SELECT * FROM" + "`tab" + data['tailposData'][i]['dbName'] + "` WHERE id=%s ",
+                exist = frappe.db.sql("SELECT * FROM" + "`tab" + data['tailposData'][i]['dbName'] + "` WHERE name=%s ",
                                       (data['tailposData'][i]['syncObject']['_id']))
             except Exception:
                 print(frappe.get_traceback())
