@@ -8,8 +8,6 @@ from frappe.model.document import Document
 import uuid
 
 class Shifts(Document):
-	def autoname(self):
-		self.name = self.attendant
 	def validate(self):
 		if self.date_updated == None:
 			self.date_updated = self.modified
