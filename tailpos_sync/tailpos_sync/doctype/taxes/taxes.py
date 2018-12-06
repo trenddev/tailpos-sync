@@ -5,7 +5,6 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from tailpos_sync.events import document_on_trash, document_on_update, document_on_save
 import uuid
 
 class Taxes(Document):
@@ -24,7 +23,3 @@ class Taxes(Document):
 				"option": self.option,
 				"activate": self.activate
 			}
-			document_on_save(skeleton_doc, self.__dict__['doctype'])
-
-	def on_trash(self):
-		document_on_trash(self)

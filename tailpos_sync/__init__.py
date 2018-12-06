@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-__version__ = '0.0.2'
+__version__ = '0.0.4'
 
 # Changelog
 # =========
-# - Added `pull_data` function
+# - Created 'Receipts Closing Voucher' for creation of Sales Invoice
+# =========
 

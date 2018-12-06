@@ -5,7 +5,6 @@
 from __future__ import unicode_literals
 from frappe.model.document import Document
 from frappe import _
-from tailpos_sync.events import document_on_update, document_on_trash, document_on_save
 import frappe
 import uuid
 import json
@@ -33,8 +32,6 @@ class Categories(Document):
             "name": self.description,
             "colorAndShape": json.dumps(colorAndShape).replace(" ", "")
         }
-
-        document_on_save(skeleton_doc, self.__dict__['doctype'])
 
     def validate(self):
         flags = self.__dict__['flags']
@@ -84,9 +81,6 @@ class Categories(Document):
                 self.colorandshape = json.dumps(colorAndShape).replace(" ", "")
                 self.edit_color = 0
 
-                if not self.from_couchdb:
-                    document_on_update(self)
-
             # CouchDB
             else:
                 colorAndShape = json.loads(self.colorandshape)[0]
@@ -103,9 +97,3 @@ class Categories(Document):
 
                 self.color = colors[colorAndShape['color']]
                 self.shape = colorAndShape['shape'].capitalize()
-
-                if not self.from_couchdb:
-                    document_on_update(self)
-
-    def on_trash(self):
-        document_on_trash(self)
