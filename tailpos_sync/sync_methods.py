@@ -43,14 +43,17 @@ def insert_data(i, data, frappe_table, receipt_total):
         if value == "percentage":
             frappe_table.db_set("type", "Percentage")
 
-        elif field_name == "date":
+        if field_name == "date":
+            print(value)
             if value:
                 if data[i]['dbName'] != "Receipts":
-
                     value = datetime.datetime.fromtimestamp(value / 1000.0).date()
+                    print("VALUUUUEEEEEE")
+                    print(value)
                 else:
-                    value = datetime.datetime.fromtimestamp(value / 1000.0)
-
+                    value = datetime.datetime.fromtimestamp(value / 1000.0).date()
+                    print("VALUUUUEEEEEE RECEEEEEEEEEipts")
+                    print(value)
         elif field_name == "shift_beginning" or field_name == "shift_end":
             if value:
                 value = datetime.datetime.fromtimestamp(value / 1000.0)

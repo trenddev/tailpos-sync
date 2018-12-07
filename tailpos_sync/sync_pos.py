@@ -4,6 +4,18 @@ import datetime
 
 
 @frappe.whitelist()
+def tailpos_test(data):
+    print(data)
+    shift_array = []
+    shift_data = frappe.db.sql(""" SELECT * FROM `tabShifts` """, as_dict=True)
+    if len(shift_data) > 0:
+        for x in shift_data:
+            shift_array.append({
+                "shift_object": x
+            })
+    return {"data": shift_array}
+
+@frappe.whitelist()
 def pull_data(data):
     query = "SELECT name FROM `tab{0}`".format(data['doctype'])
 
