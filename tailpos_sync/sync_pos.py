@@ -4,6 +4,11 @@ import datetime
 
 
 @frappe.whitelist()
+def tailpos_test(data):
+    print(data)
+    return {"data": "Tailpos Test"}
+
+@frappe.whitelist()
 def pull_data(data):
     query = "SELECT name FROM `tab{0}`".format(data['doctype'])
 
