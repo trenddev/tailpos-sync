@@ -15,8 +15,8 @@ def tailpos_test(data):
     #         shift_array.append({
     #             "shift_object": x
     #         })
-    # return {"data": shift_array}
-    print(shift_data)
+    return {"data": shift_array}
+    # print(shift_data)
 
 @frappe.whitelist()
 def pull_data(data):
