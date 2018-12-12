@@ -6,8 +6,9 @@ import datetime
 @frappe.whitelist()
 def tailpos_test(data):
     print(data)
-    shift_end_from = data['data']['shift_end_from'] + " 00:00:00"
-    shift_end_to = data['data']['shift_end_from'] + " 23:59:59"
+    # sample_object = {u'shift_end_from': u'2018-12-01'}
+    shift_end_from = data['shift_end_from'] + " 00:00:00"
+    shift_end_to = data['shift_end_from'] + " 23:59:59"
     shift_array = []
     shift_data = frappe.db.sql(""" SELECT * FROM `tabShifts` WHERE shift_end BETWEEN %s AND %s """,(shift_end_from,shift_end_to), as_dict=True)
     # if len(shift_data) > 0:
@@ -16,7 +17,7 @@ def tailpos_test(data):
     #             "shift_object": x
     #         })
     return {"data": shift_array}
-    # print(shift_data)
+    # print(sample_object['shift_end_from'])
 
 @frappe.whitelist()
 def pull_data(data):
