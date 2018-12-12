@@ -5,7 +5,7 @@ import datetime
 
 @frappe.whitelist()
 def tailpos_test(data):
-    # print(data)
+    print(data)
     shift_end_from = data['shift_end_from'] + " 00:00:00"
     shift_end_to = data['shift_end_to'] + " 23:59:59"
     shift_array = []
