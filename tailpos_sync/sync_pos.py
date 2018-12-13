@@ -19,7 +19,9 @@ def tailpos_test(data, type_of_query):
         #         })
         return {"data": shift_data}
     elif type_of_query == "Item":
-        shift_data = frappe.db.sql(""" SELECT * FROM `tabReceipts`""", as_dict=True)
+        item_end_from = data['item_end_from']
+        item_end_to = data['item_end_to']
+        shift_data = frappe.db.sql(""" SELECT * FROM `tabReceipts` WHERE date BETWEEN %s AND %s""",(item_end_from,item_end_to), as_dict=True)
         return shift_data
 @frappe.whitelist()
 def pull_data(data):
