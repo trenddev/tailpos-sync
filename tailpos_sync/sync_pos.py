@@ -8,8 +8,8 @@ def tailpos_test(data):
     if data['type_of_query'] == "Shifts":
         print(data)
         # sample_object = {u'shift_end_from': u'2018-12-01'}
-        shift_end_from = data['shift_end_from'] + " 00:00:00"
-        shift_end_to = data['shift_end_to'] + " 23:59:59"
+        shift_end_from = data['end_from'] + " 00:00:00"
+        shift_end_to = data['end_to'] + " 23:59:59"
         shift_array = []
         shift_data = frappe.db.sql(""" SELECT * FROM `tabShifts` WHERE shift_end BETWEEN %s AND %s """,(shift_end_from,shift_end_to), as_dict=True)
         # if len(shift_data) > 0:
@@ -19,8 +19,9 @@ def tailpos_test(data):
         #         })
         return {"data": shift_data}
     elif data['type_of_query'] == "Item":
-        item_end_from = data['item_end_from']
-        item_end_to = data['item_end_to']
+
+        item_end_from = data['end_from']
+        item_end_to = data['end_to']
         shift_data = frappe.db.sql(""" SELECT * FROM `tabReceipts` WHERE date BETWEEN %s AND %s""",(item_end_from,item_end_to), as_dict=True)
         return shift_data
 @frappe.whitelist()
