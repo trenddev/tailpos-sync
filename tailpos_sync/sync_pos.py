@@ -4,21 +4,23 @@ import datetime
 
 
 @frappe.whitelist()
-def tailpos_test(data):
-    print(data)
-    # sample_object = {u'shift_end_from': u'2018-12-01'}
-    shift_end_from = data['shift_end_from'] + " 00:00:00"
-    shift_end_to = data['shift_end_from'] + " 23:59:59"
-    shift_array = []
-    shift_data = frappe.db.sql(""" SELECT * FROM `tabShifts` WHERE shift_end BETWEEN %s AND %s """,(shift_end_from,shift_end_to), as_dict=True)
-    # if len(shift_data) > 0:
-    #     for x in shift_data:
-    #         shift_array.append({
-    #             "shift_object": x
-    #         })
-    return {"data": shift_array}
-    # print(sample_object['shift_end_from'])
-
+def tailpos_test(data, type_of_query):
+    if type_of_query == "Shifts":
+        print(data)
+        # sample_object = {u'shift_end_from': u'2018-12-01'}
+        shift_end_from = data['shift_end_from'] + " 00:00:00"
+        shift_end_to = data['shift_end_to'] + " 23:59:59"
+        shift_array = []
+        shift_data = frappe.db.sql(""" SELECT * FROM `tabShifts` WHERE shift_end BETWEEN %s AND %s """,(shift_end_from,shift_end_to), as_dict=True)
+        # if len(shift_data) > 0:
+        #     for x in shift_data:
+        #         shift_array.append({
+        #             "shift_object": x
+        #         })
+        return {"data": shift_data}
+    elif type_of_query == "Item":
+        shift_data = frappe.db.sql(""" SELECT * FROM `tabReceipts`""", as_dict=True)
+        return shift_data
 @frappe.whitelist()
 def pull_data(data):
     query = "SELECT name FROM `tab{0}`".format(data['doctype'])
