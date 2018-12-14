@@ -24,6 +24,16 @@ def tailpos_test(data):
         item_end_to = data['end_to']
         shift_data = frappe.db.sql(""" SELECT * FROM `tabReceipts` WHERE date BETWEEN %s AND %s""",(item_end_from,item_end_to), as_dict=True)
         return shift_data
+    elif data['type_of_query'] == "Sales":
+        sales_data = ""
+        if data['type_of_filter'] == "Daily":
+            sales_data = frappe.db.sql(""" SELECT * FROM `tabReceipts` WHERE MONTH(date) = %s and YEAR(date) = %s""",(data['month'],data['year']), as_dict=True)
+        if data['type_of_filter'] == "Monthly":
+            sales_data = frappe.db.sql(""" SELECT * FROM `tabReceipts` WHERE YEAR(date) = %s""",(data['year']), as_dict=True)
+        if data['type_of_filter'] == "Yearly":
+            sales_data = frappe.db.sql(""" SELECT * FROM `tabReceipts`""", as_dict=True)
+
+        return sales_data
 @frappe.whitelist()
 def pull_data(data):
     query = "SELECT name FROM `tab{0}`".format(data['doctype'])
