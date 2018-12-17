@@ -5,6 +5,7 @@ import datetime
 
 @frappe.whitelist()
 def tailpos_test(data):
+    print("DATAAAAAAAAAAAAAAA")
     print(data)
     if data['type_of_query'] == "Shifts":
 
