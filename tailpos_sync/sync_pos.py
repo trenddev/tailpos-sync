@@ -5,8 +5,9 @@ import datetime
 
 @frappe.whitelist()
 def tailpos_test(data):
+    print(data)
     if data['type_of_query'] == "Shifts":
-        print(data)
+
         # sample_object = {u'shift_end_from': u'2018-12-01'}
         shift_end_from = data['end_from'] + " 00:00:00"
         shift_end_to = data['end_to'] + " 23:59:59"
