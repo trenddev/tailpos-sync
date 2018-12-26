@@ -2,11 +2,11 @@
 from __future__ import unicode_literals
 import frappe
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 # Changelog
 # =========
-# - Created 'Receipts Closing Voucher' for creation of Sales Invoice
+# - Created Tail Settings where you can add button
 # =========
 
 
